@@ -2,7 +2,7 @@
 
 [![platform](https://img.shields.io/badge/platform-Node--RED-red)](https://nodered.org)
 ![NPM version](https://badge.fury.io/js/node-red-contrib-iiot-rpi-ads1115.svg)
-![NPM](https://img.shields.io/npm/l/node-red-contrib-iiot-ads1115)
+![NPM](https://img.shields.io/npm/l/node-red-contrib-iiot-rpi-ads1115)
 
 A Node-Red node for 16bit ads1115 analog to digital converter<br>
 
