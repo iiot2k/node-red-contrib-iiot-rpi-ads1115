@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-iiot-rpi-ads1115",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "description": "A Node-Red node for ads1115 analog to digital converter",
 
   "dependencies": {
@@ -13,11 +13,12 @@
 
   "license": "Apache-2.0",
   "keywords": ["node-red", "raspberry pi", "rpi", "ads1115",
-    "iot", "iiot", "analog"],
+    "iot", "iiot", "analog", "adc"],
 
   "node-red": {
     "nodes": {
-      "iiot-ads1115": "ads1115.js"
+      "iiot-ads1115": "ads1115.js",
+      "iiot-ads1115-m": "ads1115-m.js"
     }
   },
 

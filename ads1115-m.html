@@ -1,0 +1,160 @@
+<!--
+  Copyright 2022 Ocean (iiot2k@gmail.com).
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<script type="text/javascript">
+    RED.nodes.registerType('ads1115-m', {
+        category: 'iiot modules',
+        color: 'Coral',
+        paletteLabel: 'ads1115-m',
+        defaults: {
+            name:     { value:"" },
+            devadr:   { value: "0", required: true },
+            rate:     { value: "4", required: true },
+            gain0:    { value: "2", required: true },
+            gain1:    { value: "2", required: true },
+            gain2:    { value: "2", required: true },
+            gain3:    { value: "2", required: true },
+            tupdate:  { value: 1000, required: true, validate: function (v) { return RED.validators.number(v) && (v >= 10) && (v <= 5000); } },
+            onchange: { value: true },
+            rawdata:  { value: false },
+        },
+        inputs: 0,
+        outputs: 1,
+        outputLabels: ["numeric array"],
+        icon: "voltmeter.png",
+        labelStyle: function() { return this.name ? "node_label_italic" : ""; },
+        label: function () {
+            return this.name || "ads1115-m @" + (0x48 + parseInt(this.devadr)).toString(16).toUpperCase();
+        },
+    });
+</script>
+
+<script type="text/html" data-template-name="ads1115-m">
+    <div class="form-row">
+        <label style="width:100%; border-bottom: 2px solid rgb(0, 0, 0);"><b>ADS1115 16bit Analog to Digital Converter</b></label>
+    </div>
+    <div id="div-devadr" class="form-row">
+        <label for="node-input-devadr"><b>I2C Address</b></label>
+        <select type="text" id="node-input-devadr" style="width: auto;">
+            <option value="0">48H</option>
+            <option value="1">49H</option>
+            <option value="2">4AH</option>
+            <option value="3">4BH</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-rate"><b>Data Rate</b></label>
+        <select type="text" id="node-input-rate" style="width: auto;">
+            <option value="0">8 SPS</option>
+            <option value="1">16 SPS</option>
+            <option value="2">32 SPS</option>
+            <option value="3">64 SPS</option>
+            <option value="4">128 SPS</option>
+            <option value="5">250 SPS</option>
+            <option value="6">475 SPS</option>
+            <option value="7">860 SPS</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-gain0"><b>Inp. A0 Range</b></label>
+        <select type="text" id="node-input-gain0" style="width: auto;">
+            <option value="0">±6144mV</option>
+            <option value="1">±4096mV</option>
+            <option value="2">±2048mV</option>
+            <option value="3">±1024mV</option>
+            <option value="4">±512mV</option>
+            <option value="5">±256mV</option>
+            <option value="6">Off</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-gain1"><b>Inp. A1 Range</b></label>
+        <select type="text" id="node-input-gain1" style="width: auto;">
+            <option value="0">±6144mV</option>
+            <option value="1">±4096mV</option>
+            <option value="2">±2048mV</option>
+            <option value="3">±1024mV</option>
+            <option value="4">±512mV</option>
+            <option value="5">±256mV</option>
+            <option value="6">Off</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-gain2"><b>Inp. A2 Range</b></label>
+        <select type="text" id="node-input-gain2" style="width: auto;">
+            <option value="0">±6144mV</option>
+            <option value="1">±4096mV</option>
+            <option value="2">±2048mV</option>
+            <option value="3">±1024mV</option>
+            <option value="4">±512mV</option>
+            <option value="5">±256mV</option>
+            <option value="6">Off</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-gain3"><b>Inp. A3 Range</b></label>
+        <select type="text" id="node-input-gain3" style="width: auto;">
+            <option value="0">±6144mV</option>
+            <option value="1">±4096mV</option>
+            <option value="2">±2048mV</option>
+            <option value="3">±1024mV</option>
+            <option value="4">±512mV</option>
+            <option value="5">±256mV</option>
+            <option value="6">Off</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-tupdate"><b>Read Cycle</b></label>
+        <input id="node-input-tupdate" input type="number" min="10" max="5000" required style="width: auto;">
+        <label for="node-input-tupdate"> ms</label>
+    </div>
+    <div class="form-row">
+        <label for="node-input-onchange"><b>On Change</b></label>
+        <input type="checkbox" id="node-input-onchange" title="Send message when value changes" style="display: inline-block; width: auto; vertical-align: top;">
+    </div>
+    <div class="form-row">
+        <label for="node-input-rawdata"><b>Raw Data</b></label>
+        <input type="checkbox" id="node-input-rawdata" title="Send value as raw data" style="display: inline-block; width: auto; vertical-align: top;">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><b>Name</b></label>
+        <input id="node-input-name" type="text" title="Give this node a name">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="ads1115-m">
+    <p>ADS1115 16bit Analog to Digital Converter (Multi)</p>
+    <h3><b>Output:</b></h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number array</span></dt>
+    </dl>
+    <h3><b>Details:</b></h3>
+    <p>
+        Reads on cycle analog inputs.<br><br>
+        <p class="form-tips">
+            This node works on Raspberry Pi<br>
+            with 32bit or 64bit OS.<br>
+            Sends all channel values as array.<br>
+            For send message when value changes<br>
+            select <b>On Change</b>.<br>
+            To get adc raw data select <b>Raw Data.</b><br>
+            The output value is mV or adc raw data.<br>
+            Input voltages to ground<br> 
+            gets only positive value.<br> 
+            Enable I2C with raspi-config.<br>
+        </p>
+	</p>
+</script>
